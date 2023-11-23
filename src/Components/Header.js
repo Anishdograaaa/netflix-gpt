@@ -1,25 +1,58 @@
-import React from 'react';
-import { signOut } from "firebase/auth";
+import React, { useEffect } from 'react';
+import {  onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
+import { addUser, removeUser } from '../utils/userSlice';
+import { MAIN_LOGO, USER_ICON } from '../utils/constant';
+
 
 const Header = () => {
-  const user = useSelector((store)=> store.user)
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const user = useSelector((store)=> store.user)
+  
   const HandleSignOut = ()=>{
     signOut(auth).then(() => {
-      navigate("/")
+      
     }).catch((error) => {
       // An error happened.
+      navigate("/error")
     });
+    
   }
+  useEffect(()=>{
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          
+          const {uid,email,displayName} = user;
+          dispatch(addUser({
+            uid:uid,
+            email:email,
+            displayName:displayName})
+            );
+            navigate("/browse")
+          
+          
+          
+          
+        } else {
+          dispatch(removeUser())
+          navigate("/")
+         
+          
+               }
+          },);
+          return ()=> unsubscribe();
+        },[])
+      
+  
   return (
     <div className='w-full absolute px-9 py-2 bg-gradient-to-b from-black z-10 flex justify-between'>
-        <img className='w-48' src='https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png'
+        <img className='w-48' src={MAIN_LOGO}
         alt='logo'/>
         {user && (<div className='p-2 flex'>
-          <img alt='usericon' className='w-12 h-12 my-2' src="https://ih1.redbubble.net/image.618369215.1083/flat,800x800,075,f.u2.jpg"/>
+          <img alt='usericon' className='w-12 h-12 my-2' src={USER_ICON}/>
           <button onClick={HandleSignOut} className='font-bold text-white px-1' >(Sign Out)</button>
         </div>)}
         

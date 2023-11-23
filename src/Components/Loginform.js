@@ -3,15 +3,16 @@ import Header from './Header'
 import { checkValidData } from '../utils/validate';
 import {  createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../utils/firebase';
-import { useNavigate } from 'react-router-dom';
 import {  updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { BACK_GROUND } from '../utils/constant';
+
+
 
 
 const Loginform = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate(); 
     const [isSigninform,setisSignInForm] = useState(true);
     const [errMessage,seterrMessage] = useState(null);
     const email = useRef(null);
@@ -31,8 +32,10 @@ const Loginform = () => {
             displayName: name.current.value, photoURL: "https://example.com/jane-q-user/profile.jpg"
           }).then(() => {
             const {uid,email,displayName} = auth.currentUser;
-              dispatch(addUser({uid:uid,email:email,displayName:displayName}))
-            navigate("/browse")
+              dispatch(addUser({uid:uid,email:email,displayName:displayName}));
+              
+              
+            
           }).catch((error) => {
             seterrMessage(error.message)
           });
@@ -53,7 +56,9 @@ const Loginform = () => {
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-          navigate("/browse")
+          
+         
+          
           // ...
         })
         .catch((error) => {
@@ -74,7 +79,7 @@ const Loginform = () => {
     <div >
         <Header/>
         <div className='absolute'>
-        <img src='https://assets.nflxext.com/ffe/siteui/vlv3/a09bb938-2d90-42ae-986e-5a3e4abf9e77/8eb1e781-3494-4aa4-9405-268ca6473e4c/IN-en-20231113-popsignuptwoweeks-perspective_alpha_website_large.jpg'
+        <img src={BACK_GROUND}
              alt="background"/>
         </div>
         
@@ -86,7 +91,7 @@ const Loginform = () => {
             <input ref={password} type='password' placeholder='Password' className='p-4 my-2 w-full bg-gray-800 rounded-lg'/>
             <button  className='p-4 my-6 bg-red-700 w-full rounded-lg' onClick={handleSignInbtn}>{isSigninform?"Sign In":"Sign Up"}</button>
             <p className='py-2 text-red-600 font-bold text-lg'>{errMessage}</p>
-            <p className='py-2 cursor-pointer' onClick={toggleSignInForm}>{isSigninform?"New to Netflix? Sign Up Now":"Already registered Sign In now"}</p>
+            <p className='py-2 cursor-pointer' onClick={toggleSignInForm}>{isSigninform?"New to Netflix? Sign Up Now":"Already registered? Sign In now"}</p>
         </form>
 
     </div>
