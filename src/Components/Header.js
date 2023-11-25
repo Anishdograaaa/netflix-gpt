@@ -1,26 +1,17 @@
 import React, { useEffect } from 'react';
-import {  onAuthStateChanged, signOut } from "firebase/auth";
+import {   onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
-import {  useDispatch, useSelector } from 'react-redux';
+import {   useDispatch, useSelector } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
 import { MAIN_LOGO, USER_ICON } from '../utils/constant';
 
 
 const Header = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const user = useSelector((store)=> store.user)
-  
-  const HandleSignOut = ()=>{
-    signOut(auth).then(() => {
-      
-    }).catch((error) => {
-      // An error happened.
-      navigate("/error")
-    });
-    
-  }
+
   useEffect(()=>{
     const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {
@@ -32,6 +23,7 @@ const Header = () => {
             displayName:displayName})
             );
             navigate("/browse")
+            
           
           
           
@@ -39,12 +31,25 @@ const Header = () => {
         } else {
           dispatch(removeUser())
           navigate("/")
+          
          
           
                }
           },);
           return ()=> unsubscribe();
         },[])
+  
+  const HandleSignOut = ()=>{
+    signOut(auth).then(() => {
+      
+      
+    }).catch((error) => {
+      // An error happened.
+      navigate("/error")
+    });
+    
+  }
+  
       
   
   return (

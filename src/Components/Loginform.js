@@ -11,7 +11,9 @@ import { BACK_GROUND } from '../utils/constant';
 
 
 
+
 const Loginform = () => {
+   
     const dispatch = useDispatch();
     const [isSigninform,setisSignInForm] = useState(true);
     const [errMessage,seterrMessage] = useState(null);
@@ -33,6 +35,7 @@ const Loginform = () => {
           }).then(() => {
             const {uid,email,displayName} = auth.currentUser;
               dispatch(addUser({uid:uid,email:email,displayName:displayName}));
+             
               
               
             
@@ -56,6 +59,7 @@ const Loginform = () => {
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
+          
           
          
           
