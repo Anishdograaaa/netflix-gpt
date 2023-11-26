@@ -7,6 +7,8 @@ import usePopularMovies from '../hooks/usePopularMovies'
 import useOnTheAircopy from '../hooks/useOnTheAircopy'
 import useAiringToday from '../hooks/useAiringToday'
 import useTvSeries from '../hooks/useTvSeries'
+import GptSearch from './GptSearch'
+import { useSelector } from 'react-redux'
 
 
 const Browse = () => {
@@ -15,13 +17,20 @@ const Browse = () => {
   useOnTheAircopy();
   useAiringToday();
   useTvSeries();
+  const togglegptsearch = useSelector(store => store.gpt.toggleGpt)
   
   
   return (
     <div className='no-scrollbar'>
        <Header/>
-        <MainContainer/>
-        <SecondaryContainer/>
+       {togglegptsearch? <GptSearch/> : 
+           <>
+               <MainContainer/>
+               <SecondaryContainer/>
+           </>    
+       }
+       
+        
     </div>
     
   )
