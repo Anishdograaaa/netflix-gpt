@@ -83,11 +83,11 @@ const Loginform = () => {
     <div >
         <Header/>
         <div className='absolute'>
-        <img src={BACK_GROUND}
+        <img className='h-screen object-cover md:w-screen' src={BACK_GROUND}
              alt="background"/>
         </div>
         
-        <form onSubmit={(e)=>e.preventDefault()} className='bg-black absolute w-3/12 p-12  mx-auto right-0 left-0 my-36 text-white bg-opacity-80 rounded-lg'>
+        <form onSubmit={(e)=>e.preventDefault()} className='bg-black absolute w-full md:w-3/12 p-12  mx-auto right-0 left-0 my-36 text-white bg-opacity-80 rounded-lg'>
             <h1 className='text-3xl font-bol py-4'>{isSigninform? "Sign In":"Sign Up"}</h1>
             {!isSigninform && (<input ref={name} type='text' placeholder='Name' className='p-4 my-2 w-full bg-gray-800 rounded-lg' />)}
             

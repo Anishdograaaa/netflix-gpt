@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { addonTheAir } from '../utils/moviesSlice'
 import { useEffect } from 'react';
 const useOnTheAircopy = ()=>{
-    
+   
     const dispatch = useDispatch();
     const getonTheAir = async()=>{
            
@@ -16,7 +16,7 @@ const useOnTheAircopy = ()=>{
     
     useEffect(()=>{
         
-        
+       
         getonTheAir();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);

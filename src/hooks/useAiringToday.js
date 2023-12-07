@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { addairingToday } from '../utils/moviesSlice'
 import { useEffect } from 'react';
 const useAiringToday = ()=>{
-    
+   
     const dispatch = useDispatch();
     const getAiringToday = async()=>{
            

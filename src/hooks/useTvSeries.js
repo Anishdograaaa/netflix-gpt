@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { addtvSeries } from '../utils/moviesSlice'
 import { useEffect } from 'react';
 const useTvSeries = ()=>{
-    
+     
     const dispatch = useDispatch();
     const getTvSeries = async()=>{
            
